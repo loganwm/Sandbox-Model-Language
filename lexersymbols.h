@@ -14,6 +14,17 @@ enum {
    ERROR_TOKEN, // returned if illegal character found
    END_STMT,   // end of statement
    ID,         // identifier
+   ARCHETYPE_KEYWORD,
+   OBJECT_KEYWORD,
+   INHERITANCE_OP,
+   NATIVE_KEYWORD,
+   STATE_KEYWORD,
+   MEMBER_OP,
+   ARG_SEPARATOR,
+   OPEN_BRACKET,
+   CLOSE_BRACKET,
+   OPEN_PAREN,
+   CLOSE_PAREN
 };
 
 #endif

@@ -27,13 +27,23 @@ STR      \"[^\"]*\"
 WSPACE   [ \t]+
 
 %%
-{IDENT}   {return ID;}
-{STR}     {printf("string");}
-{WSPACE}  {}
-";"       {return END_STMT;}
-"#"       {disregard_comment();}
-\n        {}
-.         {return ERROR_TOKEN;}
+"archetype" {return ARCHETYPE_KEYWORD;}
+"object"    {return OBJECT_KEYWORD;}
+"is"        {return INHERITANCE_OP;}
+"native"    {return NATIVE_KEYWORD;}
+"state"     {return STATE_KEYWORD;}
+"."         {return MEMBER_OP;}
+","         {return ARG_SEPARATOR;}
+"#"         {disregard_comment();}
+"{"         {return OPEN_BRACKET;}
+"}"         {return CLOSE_BRACKET;}
+"("         {return OPEN_PAREN;}
+")"         {return CLOSE_PAREN;}
+\n          {}
+{IDENT}     {return ID;}
+{STR}       {printf("string");}
+{WSPACE}    {}
+.           {return ERROR_TOKEN;}
 %%
 
 void disregard_comment()

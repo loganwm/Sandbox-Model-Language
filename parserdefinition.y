@@ -21,12 +21,32 @@ void yyerror(char* message);
 %token ERROR_TOKEN
 %token END_STMT
 %token ID
-
+%token ARCHETYPE_KEYWORD
+%token OBJECT_KEYWORD
+%token INHERITANCE_OP
+%token NATIVE_KEYWORD
+%token STATE_KEYWORD
+%token MEMBER_OP
+%token ARG_SEPARATOR
+%token OPEN_BRACKET
+%token CLOSE_BRACKET
+%token OPEN_PAREN
+%token CLOSE_PAREN
 
 %%
 
+program:
+	ARCHETYPE_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("arch dec");}
+;
+
+statement_list:
+	statement_list statement |
+	 /* empty */
+;
+
 statement:
-	END_STMT {printf("Identifier statement.");}
+	END_STMT {printf("End statement.");} |
+	ID       {printf("Identifier statement");}
 ;
 
 %%

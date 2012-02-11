@@ -35,8 +35,10 @@ void yyerror(char* message);
 
 %%
 
-program:
+code:
 	ARCHETYPE_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("arch dec");}
+	| ARCHETYPE_KEYWORD ID INHERITANCE_OP ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("arch dec with inheritance");}
+	| OBJECT_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("obj dec");}
 ;
 
 statement_list:

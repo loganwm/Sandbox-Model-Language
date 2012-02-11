@@ -1,4 +1,4 @@
-archetype test_arch
+archetype test_arch is another_arch
 {
 
 

@@ -1,5 +1,15 @@
 archetype test_arch is another_arch
 {
+	integer print(integer x, integer y, integer z)
+	{
 
+	}
 
+	state active
+	{
+		integer print(integer x, integer y, integer z)
+		{
+
+		}
+	}
 }

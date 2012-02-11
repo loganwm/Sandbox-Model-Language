@@ -12,10 +12,10 @@ lexer.o: lexer.c
 parser.o: parser.c
 	$(CC) -c parser.c
 
-lexer.c:
+lexer.c: lexerdefinition.l
 	flex -o lexer.c lexerdefinition.l
 
-parser.c:
+parser.c: parserdefinition.y
 	bison parserdefinition.y -o parser.c
 
 clean:

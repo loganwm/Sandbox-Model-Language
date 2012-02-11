@@ -32,6 +32,7 @@ WSPACE   [ \t]+
 "is"        {return INHERITANCE_OP;}
 "native"    {return NATIVE_KEYWORD;}
 "state"     {return STATE_KEYWORD;}
+"integer"   {return TYPE_INTEGER;}
 "."         {return MEMBER_OP;}
 ","         {return ARG_SEPARATOR;}
 "#"         {disregard_comment();}

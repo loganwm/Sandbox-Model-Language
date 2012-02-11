@@ -24,6 +24,7 @@ void yyerror(char* message);
 %token ARCHETYPE_KEYWORD
 %token OBJECT_KEYWORD
 %token INHERITANCE_OP
+%token TYPE_INTEGER
 %token NATIVE_KEYWORD
 %token STATE_KEYWORD
 %token MEMBER_OP
@@ -36,9 +37,9 @@ void yyerror(char* message);
 %%
 
 code:
-	ARCHETYPE_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("arch dec");}
-	| ARCHETYPE_KEYWORD ID INHERITANCE_OP ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("arch dec with inheritance");}
-	| OBJECT_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("obj dec");}
+	ARCHETYPE_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("archetype declaration\n");}
+	| ARCHETYPE_KEYWORD ID INHERITANCE_OP ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("archetype declaration with inheritance\n");}
+	| OBJECT_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("object declaration with inheritance\n");}
 ;
 
 statement_list:
@@ -46,9 +47,35 @@ statement_list:
 	 /* empty */
 ;
 
+statement_block:
+	OPEN_BRACKET statement_list CLOSE_BRACKET {}
+;
+
 statement:
-	END_STMT {printf("End statement.");} |
-	ID       {printf("Identifier statement");}
+	method_declaration {printf("method declaration\n");} |
+	state_declaration {printf("state declaration\n");}
+;
+
+state_declaration:
+	STATE_KEYWORD ID statement_block  {}
+;
+
+method_declaration:
+	type_specifier ID OPEN_PAREN argument_list CLOSE_PAREN statement_block  {}
+;
+
+argument_list:
+	argument {} |
+	argument ARG_SEPARATOR argument_list {} |
+	/* empty */ {}
+;
+
+argument:
+	type_specifier ID
+;
+
+type_specifier:
+	TYPE_INTEGER {}
 ;
 
 %%

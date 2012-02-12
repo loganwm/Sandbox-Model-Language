@@ -1,7 +1,21 @@
 archetype test_arch is another_arch
 {
+	if (x = 3)
+	{
+		
+	}
+	else if (y = 4)
+	{
+
+	}
+	else
+	{
+
+	}
+
 	integer print(integer x, integer y, integer z)
 	{
+
 
 	}
 

@@ -11,6 +11,7 @@
 #include <string.h>   // strcpy, strncpy
 
 #include "lexersymbols.h"
+#include "shared.h"
 
 void disregard_comment();
 
@@ -22,6 +23,7 @@ void disregard_comment();
 
 LETTER   [a-zA-Z_]
 DIGIT    [0-9]
+INTEGER  {DIGIT}*
 IDENT    {LETTER}({LETTER}|{DIGIT})*
 STR      \"[^\"]*\"
 WSPACE   [ \t]+
@@ -32,6 +34,7 @@ WSPACE   [ \t]+
 "is"        {return INHERITANCE_OP;}
 "native"    {return NATIVE_KEYWORD;}
 "state"     {return STATE_KEYWORD;}
+"stateset"  {return STATESET_KEYWORD;}
 "integer"   {return TYPE_INTEGER;}
 "."         {return MEMBER_OP;}
 ","         {return ARG_SEPARATOR;}
@@ -40,7 +43,12 @@ WSPACE   [ \t]+
 "}"         {return CLOSE_BRACKET;}
 "("         {return OPEN_PAREN;}
 ")"         {return CLOSE_PAREN;}
+"if"        {return IF;}
+"else"      {return ELSE;}
+"=="        {return EQUAL_OP;}
+"="         {return ASSIGN_OP;}
 \n          {}
+{INTEGER}   {printf("integer %s\n\n", yytext); yylval.integer = atoi(yytext); return INTEGER;}
 {IDENT}     {return ID;}
 {STR}       {printf("string");}
 {WSPACE}    {}
@@ -58,7 +66,6 @@ void disregard_comment()
 	{
 		current_char = input();
 	}
-
-
 }
+
 

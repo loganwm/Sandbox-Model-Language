@@ -1,12 +1,6 @@
 #ifndef __LEXERSYMBOLS_H__
 #define __LEXERSYMBOLS_H__
 
-// Union to pass information between lexer and caller
-typedef union {
-   char *str;
-} YYSTYPE;
-
-extern YYSTYPE yylval;
 
 // Lexer constants
 enum {
@@ -20,12 +14,19 @@ enum {
    TYPE_INTEGER,
    NATIVE_KEYWORD,
    STATE_KEYWORD,
+   STATESET_KEYWORD,
    MEMBER_OP,
    ARG_SEPARATOR,
    OPEN_BRACKET,
    CLOSE_BRACKET,
    OPEN_PAREN,
-   CLOSE_PAREN
+   CLOSE_PAREN,
+   IF,
+   ELSE,
+   EQUAL_OP,
+   ASSIGN_OP,
+   INTEGER,
+   STRING
 };
 
 #endif

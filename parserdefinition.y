@@ -27,16 +27,23 @@ void yyerror(char* message);
 %token TYPE_INTEGER
 %token NATIVE_KEYWORD
 %token STATE_KEYWORD
+%token STATESET_KEYWORD
 %token MEMBER_OP
 %token ARG_SEPARATOR
 %token OPEN_BRACKET
 %token CLOSE_BRACKET
 %token OPEN_PAREN
 %token CLOSE_PAREN
+%token IF
+%token ELSE
+%token EQUAL_OP
+%token ASSIGN_OP
+%token INTEGER
+%token STRING
 
 %%
 
-code:
+file:
 	ARCHETYPE_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("archetype declaration\n");}
 	| ARCHETYPE_KEYWORD ID INHERITANCE_OP ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("archetype declaration with inheritance\n");}
 	| OBJECT_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("object declaration with inheritance\n");}
@@ -53,15 +60,31 @@ statement_block:
 
 statement:
 	method_declaration {printf("method declaration\n");} |
-	state_declaration {printf("state declaration\n");}
+	state_declaration {printf("state declaration\n");} |
+	stateset_declaration {printf("stateset declaration\n");} |
+	if_statement {printf("if statement\n");}
+;
+
+stateset_declaration:
+	STATESET_KEYWORD identifier statement_block {}
 ;
 
 state_declaration:
-	STATE_KEYWORD ID statement_block  {}
+	STATE_KEYWORD identifier statement_block  {}
 ;
 
 method_declaration:
-	type_specifier ID OPEN_PAREN argument_list CLOSE_PAREN statement_block  {}
+	type_specifier identifier OPEN_PAREN argument_list CLOSE_PAREN statement_block  {}
+;
+
+if_statement:
+	IF expression statement_block else_statement {}
+;
+
+else_statement:
+	ELSE if_statement {printf("else if!\n");} |
+	ELSE statement_block {printf("simple else\n");} |
+	/* nothing, else is optional. */
 ;
 
 argument_list:
@@ -71,11 +94,35 @@ argument_list:
 ;
 
 argument:
-	type_specifier ID
+	type_specifier identifier {}
 ;
 
 type_specifier:
 	TYPE_INTEGER {}
+;
+
+
+expression:
+	assignment_expression {} |
+	OPEN_PAREN expression CLOSE_PAREN
+;
+
+assignment_expression:
+	identifier ASSIGN_OP integer {}
+;
+
+
+
+integer:
+	INTEGER { printf("test: %d\n\n", yylval); }
+;
+
+string:
+	STRING {}
+;
+
+identifier:
+	ID {}
 ;
 
 %%

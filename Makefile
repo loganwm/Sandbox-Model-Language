@@ -1,10 +1,13 @@
 CC = gcc
 
-all: main.o parser.o lexer.o
-	$(CC) main.c parser.o lexer.o -o main
+all: main.o parser.o lexer.o symboltable.o
+	$(CC) main.c parser.o lexer.o symboltable.o -o main
 
 main.o: main.c
 	$(CC) -c main.c
+
+symboltable.o: symboltable.c
+	$(CC) -c symboltable.c
 
 lexer.o: lexer.c
 	$(CC) -c lexer.c

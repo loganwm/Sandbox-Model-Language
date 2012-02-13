@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
 #include "shared.h"
 #include "symboltable.h"
 
@@ -16,15 +19,15 @@ int yywrap()
 
 int main()
 {
-	struct symbol* s;
+	struct symbol* s = NULL;
 
-	addSymbol(s, "hello");
+	s = addSymbol(s, "abcd");
+	addSymbol(s, "abcde");
+	addSymbol(s, "abcdef");	
+	addSymbol(s, "abc");
 
-	if (s == NULL)
-	{
-		printf("%s\n", s->symbol_name);
-		printf("fuck");
-	}
+	printf("%s\n", s->symbol_name);
+	printf("height: %d\n", calculateHeight(s));
 
 	yyparse();
 	return 0;

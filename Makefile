@@ -7,7 +7,7 @@ main.o: main.c
 	$(CC) -c main.c
 
 symboltable.o: symboltable.c
-	$(CC) -c symboltable.c
+	$(CC) -c symboltable.c -std=c99 
 
 lexer.o: lexer.c
 	$(CC) -c lexer.c

@@ -22,4 +22,4 @@ parser.c: parserdefinition.y
 	bison parserdefinition.y -o parser.c
 
 clean:
-	rm *.o
+	rm -f *.o main lexer.c parser.c

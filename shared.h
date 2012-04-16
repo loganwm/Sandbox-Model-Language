@@ -6,7 +6,7 @@
 // Union to pass information between lexer and caller
 typedef union {
    uint32_t integer;
-   char *str;
+   char* str;
 } YYSTYPE;
 
 extern YYSTYPE yylval;

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>   // strcpy, strncpy
 
+
 // Some yacc (bison) defines
 #define YYDEBUG 1	      // Generate debug code; needed for YYERROR_VERBOSE
 #define YYERROR_VERBOSE // Give a more specific parse error message 
@@ -25,6 +26,7 @@ void yyerror(char* message);
 %token OBJECT_KEYWORD
 %token INHERITANCE_OP
 %token TYPE_INTEGER
+%token TYPE_STRING
 %token NATIVE_KEYWORD
 %token STATE_KEYWORD
 %token STATESET_KEYWORD
@@ -46,7 +48,7 @@ void yyerror(char* message);
 file:
 	ARCHETYPE_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("archetype declaration\n");}
 	| ARCHETYPE_KEYWORD ID INHERITANCE_OP ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("archetype declaration with inheritance\n");}
-	| OBJECT_KEYWORD ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("object declaration with inheritance\n");}
+	| OBJECT_KEYWORD ID INHERITANCE_OP ID OPEN_BRACKET statement_list CLOSE_BRACKET {printf("object declaration with inheritance\n");}
 ;
 
 statement_list:
@@ -62,6 +64,7 @@ statement:
 	method_declaration {printf("method declaration\n");} |
 	state_declaration {printf("state declaration\n");} |
 	stateset_declaration {printf("stateset declaration\n");} |
+	variable_declaration {printf("variable declaration\n");} |
 	if_statement {printf("if statement\n");}
 ;
 
@@ -75,6 +78,10 @@ state_declaration:
 
 method_declaration:
 	type_specifier identifier OPEN_PAREN argument_list CLOSE_PAREN statement_block  {}
+;
+
+variable_declaration:
+	type_specifier identifier ASSIGN_OP value {}
 ;
 
 if_statement:
@@ -98,27 +105,35 @@ argument:
 ;
 
 type_specifier:
-	TYPE_INTEGER {}
+	TYPE_INTEGER {} |
+	TYPE_STRING {}
 ;
 
+value:
+	integer {} |
+	string {}
+;
 
 expression:
 	assignment_expression {} |
+	equality_expression {} |
 	OPEN_PAREN expression CLOSE_PAREN
 ;
 
 assignment_expression:
-	identifier ASSIGN_OP integer {}
+	identifier ASSIGN_OP value {}
 ;
 
-
+equality_expression:
+	identifier EQUAL_OP value {}
+;
 
 integer:
-	INTEGER { printf("test: %d\n\n", yylval); }
+	INTEGER { printf("test: %d\n", yylval); }
 ;
 
 string:
-	STRING {}
+	STRING { printf("value: %s\n", yylval); }
 ;
 
 identifier:

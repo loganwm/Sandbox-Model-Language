@@ -36,6 +36,7 @@ WSPACE   [ \t]+
 "state"     {return STATE_KEYWORD;}
 "stateset"  {return STATESET_KEYWORD;}
 "integer"   {return TYPE_INTEGER;}
+"string"   {return TYPE_STRING;}
 "."         {return MEMBER_OP;}
 ","         {return ARG_SEPARATOR;}
 "#"         {disregard_comment();}
@@ -50,7 +51,7 @@ WSPACE   [ \t]+
 \n          {}
 {INTEGER}   {printf("integer %s\n\n", yytext); yylval.integer = atoi(yytext); return INTEGER;}
 {IDENT}     {return ID;}
-{STR}       {printf("string");}
+{STR}       {printf("string"); yylval.str = yytext; return STRING;}
 {WSPACE}    {}
 .           {return ERROR_TOKEN;}
 %%
